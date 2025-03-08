@@ -1,0 +1,24 @@
+api:
+  enabled: true
+  address: 0.0.0.0:8687
+sources:
+  demo_logs:
+    type: demo_logs
+    interval: 10
+    format: json
+sinks:
+  console:
+    inputs:
+      - demo_logs
+    target: stdout
+    type: console
+    encoding:
+      codec: json
+  to_aggregator:
+    type: socket
+    inputs:
+      - demo_logs
+    address: vector-aggregator:9000  # 중앙 aggregator의 호스트와 포트
+    mode: tcp                        # TCP 모드 사용 (안정적 전송)
+    encoding:
+      codec: json

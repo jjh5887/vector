@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  vector-aggregator:
+    image: timberio/vector:0.45.0-debian
+    container_name: vector-aggregator
+    ports:
+      - "9000:9000"
+      - "18686:8686"
+    volumes:
+      - ./aggregator/vector.yaml:/etc/vector/vector.yaml:ro
+      - ./aggregator/logs:/var/log/myapp:ro
+
+  vector-agent:
+    image: timberio/vector:0.45.0-debian
+    container_name: vector-agent
+    ports:
+      - "28686:8686"
+    volumes:
+      - ./agent/vector.yaml:/etc/vector/vector.yaml:ro
+      - ./agent/logs:/var/log/myapp:ro
+
+
+  vector:
+    image: timberio/vector:0.45.0-debian
+    container_name: vector
+    ports:
+      - "8686:8686"
+    volumes:
+      - ./test/vector.yaml:/etc/vector/vector.yaml:ro

@@ -1,0 +1,20 @@
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+
+sources:
+  my_logs:
+    type: file
+    include:
+      - "/var/log/myapp/*.log"  # 읽고자 하는 로그 파일 경로 (와일드카드 사용 가능)
+    ignore_older: 86400         # 24시간 이전의 파일은 무시 (옵션)
+
+sinks:
+  to_aggregator:
+    type: socket
+    inputs:
+      - my_logs
+    address: vector-aggregator:9000  # 중앙 aggregator의 호스트와 포트
+    mode: tcp                        # TCP 모드 사용 (안정적 전송)
+    encoding:
+      codec: json                    # JSON 포맷으로 인코딩

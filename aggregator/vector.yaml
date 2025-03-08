@@ -1,0 +1,21 @@
+api:
+  enabled: true
+  address: "0.0.0.0:8686"    # GraphQL API를 위한 포트
+
+
+sources:
+  agent_input:
+    type: socket
+    address: 0.0.0.0:9000  # 에이전트가 로그를 전송할 포트
+    mode: tcp              # 안정적인 TCP 모드
+    encoding:
+      codec: json          # JSON 포맷으로 디코딩
+
+sinks:
+  console:
+    inputs:
+      - agent_input
+    target: stdout
+    type: console
+    encoding:
+      codec: json
