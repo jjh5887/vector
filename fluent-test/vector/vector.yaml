@@ -1,0 +1,18 @@
+api:
+  enabled: true
+  address: "0.0.0.0:8686"    # GraphQL API를 위한 포트
+
+
+sources:
+  agent_input:
+    type: fluent
+    address: 0.0.0.0:24224
+
+sinks:
+  console:
+    inputs:
+      - agent_input
+    target: stdout
+    type: console
+    encoding:
+      codec: json

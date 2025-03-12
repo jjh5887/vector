@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  fluentd:
+    image: fluent/fluentd:v1.14-1
+    container_name: fluentd
+    volumes:
+      - ./fluentd:/fluentd/etc   # Fluentd 설정 파일 마운트
+      - ./fluentd/td-agent:/var/log/td-agent  # 여기서 호스트 디렉토리를 마운트
+      - ./fluentd/logs:/var/log  # 여기서 호스트 디렉토리를 마운트
+
+  vector-for-fluent:
+    image: timberio/vector:0.45.0-debian
+    container_name: vector-for-fluent
+    ports:
+      - "9000:9000"
+      - "24224:24224"
+    volumes:
+      - ./vector/vector.yaml:/etc/vector/vector.yaml:ro
