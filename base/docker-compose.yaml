@@ -28,3 +28,11 @@ services:
       - "8686:8686"
     volumes:
       - ./test/vector.yaml:/etc/vector/vector.yaml:ro
+
+  vector-backpressure:
+    image: timberio/vector:0.45.0-debian
+    container_name: vector-backpressure
+    ports:
+      - "38686:8686"
+    volumes:
+      - ./backpressure/vector.yaml:/etc/vector/vector.yaml:ro
